@@ -4,7 +4,6 @@
   "description": "blog site",
   "main": "app.js",
   "scripts": {
-    "install": "npm install",
     "start": "nodemon app.js"
   },
   "keywords": [
