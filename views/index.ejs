@@ -8,5 +8,11 @@
 </head>
 <body>
     <h1>Blog index</h1>
+
+    <ul>
+        <% posts.forEach(function(post) { %>
+           <li> title:<%= post.title %> content:<%= post.content %></li>
+        <% }); %> 
+    </ul>
 </body>
 </html>

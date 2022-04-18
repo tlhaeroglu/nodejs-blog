@@ -1,25 +1,22 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 const path = require('path');
 
-app.set('view engine', 'ejs')
+const homeRouter = require('./routes/homeRouter.js');
+const adminHomeRouter = require('./routes/admin/homeRouter.js');
+
+app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(homeRouter);
+app.use('/admin' ,adminHomeRouter);
 
-
-app.get('/', (req,res) =>{
-    res.render('index')
-})
-
-app.get('/admin', (req,res) =>{
-    res.render('admin/index')
-})
 
 
 app.listen(process.env.PORT || 5000, () => {
-    console.log('server started');
-})
+    console.log('------ http://localhost:5000/ ------');
+});
