@@ -1,9 +1,12 @@
 const { Pool } = require("pg");
-const connectionString = "postgresql://postgres:12345@localhost:5432/blog";
 
 function connection() {
   return new Pool({
-    connectionString,
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
+    host: process.env.DATABASE_HOST,
+    port: process.env.DATABASE_PORT,
+    database: process.env.DATABASE_NAME
   });
 }
 
