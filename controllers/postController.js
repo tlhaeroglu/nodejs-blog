@@ -4,11 +4,12 @@ const user = require("../data/user.js");
 
 
 
+
 async function getPost(req, res) {
   var obj = await post.findById(req.params.id);
   obj.userid = await user.findById(obj.userid);
   console.log(obj);
-  res.render("post/index", { posts: await mergePostUser(obj) });
+  res.render("post/index", { post: await mergePostUser(obj) });
 }
 
 async function getPosts(req, res) {
@@ -31,16 +32,20 @@ async function mergePostUser(obj) {
 }
 
 async function createPost(req, res) {
-  if (
-    await post.createPost(req.body.userid, req.body.title, req.body.content, req.file.filename)
-  ) {
-    // console.log("body :",req.body)
-    // console.log("file :",req.file)
-
-    res.redirect("/");
-  } else {
-    res.send("SERVER ERROR");
+  if(req.file){
+    if ( await post.createPost(req.body.userid, req.body.title, req.body.content, req.file.filename) ) {
+      res.redirect("/");
+    } else {
+      res.send("SERVER ERROR");
+    }
+  } else{
+    if ( await post.createPost(req.body.userid, req.body.title, req.body.content, '') ) {
+      res.redirect("/");
+    } else {
+      res.send("SERVER ERROR");
+    }
   }
+  
 }
 
 async function deletePost(req, res, next) {
@@ -50,6 +55,10 @@ async function deletePost(req, res, next) {
   } else {
     res.status(404).send("SERVER ERROR");
   }
+
+  /*var img = await post.deletePost(req.params.id);
+  
+  res.status(200).send("OK");*/
 }
 
 module.exports = {

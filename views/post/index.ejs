@@ -1,12 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= posts.title %> </title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= post.title %></title>
+  </head>
+  <body>
+
+    <div style="text-align: center">
+
+      <% if(post.img !== '' && post.img !== null){ %>
+      <img src="../img/<%= post.img %> " width="400" alt="Error" />
+      <% } else{ %>
+      <img src="../img/static/placeholder.png " width="400" alt="Error" />
+      <% } %>
+
+      <h2><%= post.title %></h2>
+      <p><%= post.content %></p>
+      <p><small><%= post.createdat %> </small></p>
+
+      <p><strong>Paylaşan:</strong> <%= post.userid.username %></p>
+
+      <div>
+        <button class="delete" data-target="<%= post.id %> ">Sil</button>
+        <a href="post/<%= post.id %> "><strong>-></strong></a>
+      </div>
+      <hr />
+      <!-- ONE POST HERE -->
+
+    </div>
+
+  </body>
 </html>
