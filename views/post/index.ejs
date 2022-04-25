@@ -21,13 +21,24 @@
       <p><small><%= post.createdat %> </small></p>
 
       <p><strong>Paylaşan:</strong> <%= post.userid.username %></p>
-
+      <div>
+        <% post.comments.forEach(function(comment) { %>
+          <h4><%= comment.userid.username %> </h4>
+          <p> <%= comment.content %> </p>
+        <% }); %>
+      </div>
       <div>
         <button class="delete" data-target="<%= post.id %> ">Sil</button>
         <a href="post/<%= post.id %> "><strong>-></strong></a>
       </div>
       <hr />
       <!-- ONE POST HERE -->
+
+      <form action="/post/" method="POST">
+        <input type="text" name="id" value="<%= post.id %>" style="display: none;" > 
+        <input type="text" name="content" required><br>
+        <button type="submit">Yorum yap</button>
+      </form>
 
     </div>
 

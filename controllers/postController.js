@@ -1,15 +1,18 @@
 const db = require("../data/DBConnection.js");
 const post = require("../data/post.js");
 const user = require("../data/user.js");
-
+const comment = require("../data/comment.js");
 
 
 
 async function getPost(req, res) {
   var obj = await post.findById(req.params.id);
   obj.userid = await user.findById(obj.userid);
-  console.log(obj);
-  res.render("post/index", { post: await mergePostUser(obj) });
+  obj.comments = await comment.findByPostId(obj.id);
+  for(let j = 0; j < obj.comments.length; j++){
+    obj.comments[j].userid = await user.findById(obj.comments[j].userid);
+  }
+  res.render("post/index", { post: obj });
 }
 
 async function getPosts(req, res) {
@@ -20,13 +23,18 @@ async function getPosts(req, res) {
   })*/
 
   //res.json(await mergePostUser(obj)); api mode
-  res.render("index", { posts: await mergePostUser(obj) });
+  res.render("index", { posts: await buildManyPost(obj) });
 }
 
-async function mergePostUser(obj) {
+async function buildManyPost(obj) {
   var len = obj.length;
   for (let i = 0; i < len; i++) {
+
+    //relation users for post 
     obj[i].userid = await user.findById(obj[i].userid);
+    //add comments for post
+    obj[i].comments = await comment.findByPostIdLength(obj[i].id);
+
   }
   return obj;
 }
@@ -61,9 +69,20 @@ async function deletePost(req, res, next) {
   res.status(200).send("OK");*/
 }
 
+function makeComment(req, res) {
+  console.log(req.body);
+  
+  if( comment.createComment(3, req.body.id, req.body.content) ){
+    res.redirect('/post/'+req.body.id);
+  } else {
+    res.send("SERVER ERROR");
+  }
+}
+
 module.exports = {
   getPost,
   getPosts,
   createPost,
   deletePost,
+  makeComment
 };

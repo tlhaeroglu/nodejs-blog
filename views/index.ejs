@@ -25,10 +25,9 @@
       <p> <small><%= post.createdat %> </small> </p>
         
       <p> <strong>Paylaşan:</strong> <%= post.userid.username %>  </p>
-
       <div> 
         <button class="delete" data-target="<%= post.id %> ">Sil</button>
-        <a href="post/<%= post.id %> "><strong>-></strong></a>  
+        <a href="post/<%= post.id %> "><strong><%= post.comments === 0 ? "Henüz yorum yapılmadı" : post.comments+" yorum"%> </strong></a>  
       </div>
       <hr>
       <!-- ONE POST HERE -->

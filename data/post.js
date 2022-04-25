@@ -1,6 +1,7 @@
 const express = require("express");
 const db = require("../data/DBConnection.js");
 const fs = require("fs");
+const comments = require("./comment.js");
 
 async function findAll() {
   try {
@@ -40,24 +41,27 @@ async function createPost(userid, title, content, img) {
 }
 
 async function deletePost(id) {
-  try {
-    const res = await db().query("DELETE FROM post WHERE id=$1 RETURNING img", [id]);
-    console.log();
-
-    if(res.rows[0].img != ''){
-      fs.unlink('./public/img/'+res.rows[0].img , (err) =>{
-        if(err){
-          console.log(err);
-        }
-        console.log('File deleted!');
-      })
+  if(comments.deleteByPostId(id)){
+    try {
+      const res = await db().query("DELETE FROM post WHERE id=$1 RETURNING img", [id]);
+      console.log();
+  
+      if(res.rows[0].img != ''){
+        fs.unlink('./public/img/'+res.rows[0].img , (err) =>{
+          if(err){
+            console.log(err);
+          }
+          console.log('File deleted!');
+        })
+      }
+  
+      return true;
+    } catch (err) {
+      console.log(err);
+      return false;
+    } finally {
+      db().end();
     }
-    return true;
-  } catch (err) {
-    console.log(err);
-    return false;
-  } finally {
-    db().end();
   }
 }
 
