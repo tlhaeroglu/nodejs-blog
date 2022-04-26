@@ -16,14 +16,13 @@ async function getPost(req, res) {
 }
 
 async function getPosts(req, res) {
-  var obj = await post.findAll();
-  /*  NOT WORKED SO INTERESTING
-  await obj.map(async u =>{
-        u.userid = await data.getByIdUser(u.userid);
-  })*/
-
-  //res.json(await mergePostUser(obj)); api mode
-  res.render("index", { posts: await buildManyPost(obj) });
+  if(req.session.user){
+    var obj = await post.findAll();
+    res.render("index", { posts: await buildManyPost(obj) });
+  } else{
+    res.redirect('/login');
+  }
+  
 }
 
 async function buildManyPost(obj) {
@@ -70,8 +69,6 @@ async function deletePost(req, res, next) {
 }
 
 function makeComment(req, res) {
-  console.log(req.body);
-  
   if( comment.createComment(3, req.body.id, req.body.content) ){
     res.redirect('/post/'+req.body.id);
   } else {

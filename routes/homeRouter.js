@@ -1,5 +1,6 @@
 const express = require('express')
 const postController = require('../controllers/postController.js')
+const authController = require('../controllers/authController.js')
 const router = express.Router();
 const upload = require('../data/upload.js');
 
@@ -9,5 +10,9 @@ router.get('/', postController.getPosts);
 router.post('/', upload.single('img'), postController.createPost);
 
 router.delete('/:id', postController.deletePost);
+
+router.post('/login', authController.login);
+
+router.get('/login', authController.index);
 
 module.exports = router;
