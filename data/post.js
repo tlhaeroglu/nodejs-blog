@@ -25,12 +25,23 @@ async function findById(id) {
   }
 }
 
-async function createPost(userid, title, content, img) {
+async function findByUrl(url) {
+  try {
+    const res = await db().query("select * from post where post_url=$1", [url]);
+    return res.rows[0];
+  } catch (err) {
+    return err.stack;
+  } finally {
+    db().end();
+  }
+}
+
+async function createPost(userid, title, content, img, url) {
   try {
     
     const res = await db().query(
-      "INSERT INTO post (userid,title, content, img) VALUES ($1, $2, $3, $4)",
-      [userid, title, content, img]
+      "INSERT INTO post (userid,title, content, img, post_url) VALUES ($1, $2, $3, $4, $5)",
+      [userid, title, content, img, url]
     );
     return true;
   } catch (err) {
@@ -41,7 +52,7 @@ async function createPost(userid, title, content, img) {
 }
 
 async function deletePost(id) {
-  if(comments.deleteByPostId(id)){
+  if(await comments.deleteByPostId(id)){
     try {
       const res = await db().query("DELETE FROM post WHERE id=$1 RETURNING img", [id]);
       console.log();
@@ -68,6 +79,7 @@ async function deletePost(id) {
 module.exports = {
   findAll,
   findById,
+  findByUrl,
   createPost,
   deletePost,
 };

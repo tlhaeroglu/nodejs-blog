@@ -1,10 +1,12 @@
 const express = require('express');
 const postController = require('../controllers/postController.js')
+const authController = require('../controllers/authController.js')
+
 
 
 const router = express.Router();
 
-router.get('/:id', postController.getPost);
+router.get('/:url', postController.getPost);
 
 router.post('/', postController.makeComment);
 

@@ -12,19 +12,18 @@ async function findById(id) {
     }
 }
 
-async function isValidUser(username, password) {
+async function checkLogin(username, password) {
   try {
-    const res = await db().query("select id from users where username=$1 and password=$2", [username, password]);
-    return res.rows.length > 0;
+    const res = await db().query("select * from users where username=$1 and password=$2", [username, password]);
+    return res.rows;
   } catch (err) {
-    return false;
+    return err.stack;
   } finally {
     db().end();
   }
 }
 
-
 module.exports ={
     findById,
-    isValidUser
+    checkLogin
 }

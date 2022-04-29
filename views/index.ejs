@@ -8,6 +8,7 @@
   </head>
   <body>
     <h1>Blog index</h1>
+    <div style="text-align: end;"><a href="/logout">Çıkış yap</a></div>
 
     <div style="text-align: center;">
       <% posts.forEach(function(post) { %>
@@ -27,7 +28,7 @@
       <p> <strong>Paylaşan:</strong> <%= post.userid.username %>  </p>
       <div> 
         <button class="delete" data-target="<%= post.id %> ">Sil</button>
-        <a href="post/<%= post.id %> "><strong><%= post.comments === 0 ? "Henüz yorum yapılmadı" : post.comments+" yorum"%> </strong></a>  
+        <a href="post/<%= post.post_url %> "><strong><%= post.comments === 0 ? "Henüz yorum yapılmadı" : post.comments+" yorum"%> </strong></a>  
       </div>
       <hr>
       <!-- ONE POST HERE -->
