@@ -9,6 +9,27 @@
   <body>
     <h1>Blog index</h1>
     <div style="text-align: end;"><a href="/logout">Çıkış yap</a></div>
+    <div>
+      <label for="search">Ara : </label><input type="text" name="search" id="search">
+      <button id="result">Ara </button>
+    </div> <br> <br>
+
+    <form action="/" enctype="multipart/form-data" method="POST">
+      <label for="userid">Userid: <input type="text" name="userid" value="" />  </label>
+      <br />
+      <label for="title">title: <input type="text" name="title" value="" /> </label>
+      <br />
+      <label for="content"
+        >content: <input type="text" name="content" value=""/>
+      </label>
+      <br />
+      <input type="file" id="img" name="img" accept="image/*"><br>
+      <button type="submit">Create</button>
+    </form> <br> <br>
+
+    <%for(let i=1; i<Math.ceil(posts[0].count/3)+1; i++){ %> 
+      <button class="page"><%= i %> </button>
+    <% } %> 
 
     <div style="text-align: center;">
       <% posts.forEach(function(post) { %>
@@ -21,7 +42,7 @@
         <img src="img/static/placeholder.png " width="200" alt="Error">
       <% } %> 
 
-      <h2> <%= post.title %>  </h2>
+      <h2> <%= post.id %>  </h2>
       <p> <%= post.content %>  </p>
       <p> <small><%= post.createdat %> </small> </p>
         
@@ -36,18 +57,7 @@
       <% }); %>
     </div>
 
-    <form action="/" enctype="multipart/form-data" method="POST">
-      <label for="userid">Userid: <input type="text" name="userid" /> </label>
-      <br />
-      <label for="title">title: <input type="text" name="title" /> </label>
-      <br />
-      <label for="content"
-        >content: <input type="text" name="content" />
-      </label>
-      <br />
-      <input type="file" id="img" name="img" accept="image/*"><br>
-      <button type="submit">Create</button>
-    </form>
+    
 
     <script src="js/jquery.js"></script>
     <script src="js/script.js"></script>

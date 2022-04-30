@@ -47,11 +47,22 @@ async function deleteByPostId(id) {
   }
 }
 
+async function deleteComment(id) {
+  try {
+    const res = await db().query( "DELETE FROM comments WHERE id=$1",[id] );
+    return true;
+  } catch (err) {
+    return false;
+  } finally {
+    db().end();
+  }
+}
 
 
 module.exports = {
     findByPostId,
     findByPostIdLength,
     createComment,
-    deleteByPostId
+    deleteByPostId,
+    deleteComment
 }

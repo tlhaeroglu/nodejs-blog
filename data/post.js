@@ -3,9 +3,9 @@ const db = require("../data/DBConnection.js");
 const fs = require("fs");
 const comments = require("./comment.js");
 
-async function findAll() {
+async function findAll(page, query='') {
   try {
-    const res = await db().query("select * from post order by id");
+    const res = await db().query(`select count(*) OVER(), p.* from post p ${query}  order by p.id offset ${(page-1)*3} limit 3`);
     return res.rows;
   } catch (err) {
     return err.stack;
@@ -36,15 +36,16 @@ async function findByUrl(url) {
   }
 }
 
-async function createPost(userid, title, content, img, url) {
+async function createPost(userid, title, content, img, url, d) {
   try {
     
     const res = await db().query(
-      "INSERT INTO post (userid,title, content, img, post_url) VALUES ($1, $2, $3, $4, $5)",
-      [userid, title, content, img, url]
+      "INSERT INTO post (userid,title, content, img, post_url, createdat) VALUES ($1, $2, $3, $4, $5, $6)",
+      [userid, title, content, img, url, d]
     );
     return true;
   } catch (err) {
+    console.log(err);
     return false;
   } finally {
     db().end();

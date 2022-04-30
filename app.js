@@ -12,6 +12,7 @@ const postRouter = require("./routes/postRouter.js");
 
 app.set("view engine", "ejs");
 
+// Use no-cache system for all requests
 app.use(function (req, res, next) {
   res.set(
     "Cache-Control",
@@ -19,6 +20,7 @@ app.use(function (req, res, next) {
   );
   next();
 });
+
 app.use(
   session({
     secret: "S3cr3t",
