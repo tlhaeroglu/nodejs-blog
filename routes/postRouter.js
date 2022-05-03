@@ -6,7 +6,7 @@ const authController = require('../controllers/authController.js')
 
 const router = express.Router();
 
-router.get('/:url', postController.getPost);
+router.get('/:url', postController.renderPost);
 
 router.post('/', postController.makeComment);
 

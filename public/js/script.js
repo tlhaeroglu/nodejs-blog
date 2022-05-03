@@ -23,6 +23,10 @@ result.addEventListener('click', () =>{
   location.href = "?search=" + search.value;
 })
 
+function getSearchValue(){
+  return params.search ? params.search : "";
+}
+
 var page =document.querySelectorAll(".page");
 
 const params = new Proxy(new URLSearchParams(window.location.search), {
@@ -31,9 +35,11 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
 
 page.forEach((p) =>{
   p.addEventListener('click', (e) =>{
-    location.href = "?search=" + params.search + "&page=" + e.target.innerHTML;
+    location.href = "?search=" + getSearchValue() + "&page=" + e.target.innerHTML;
   })
 })
+
+
 
 //console.log(window.location.search);
 

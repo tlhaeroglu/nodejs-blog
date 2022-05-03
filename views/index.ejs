@@ -10,9 +10,18 @@
     <h1>Blog index</h1>
     <div style="text-align: end;"><a href="/logout">Çıkış yap</a></div>
     <div>
-      <label for="search">Ara : </label><input type="text" name="search" id="search">
-      <button id="result">Ara </button>
-    </div> <br> <br>
+      <label for="search">Ara : </label><input type="text" name="search" id="search" value="<%=search %>">
+      <button id="result">Ara </button> 
+    </div> 
+    <%
+    let range = 1;
+    if(posts[0]){
+      range = Math.ceil(posts[0].count/3)+1;
+    } 
+    for(let i=1; i<range; i++){ %> 
+      <button class="page"><%= i %> </button>
+    <% } %> 
+    <br> <div> <%= search ? search+" içerisindeki sonuçlar "+ (range -1)+ " sayfa gösteriliyor  " : "" %>  </div> <br>
 
     <form action="/" enctype="multipart/form-data" method="POST">
       <label for="userid">Userid: <input type="text" name="userid" value="" />  </label>
@@ -27,9 +36,7 @@
       <button type="submit">Create</button>
     </form> <br> <br>
 
-    <%for(let i=1; i<Math.ceil(posts[0].count/3)+1; i++){ %> 
-      <button class="page"><%= i %> </button>
-    <% } %> 
+   
 
     <div style="text-align: center;">
       <% posts.forEach(function(post) { %>
@@ -42,7 +49,7 @@
         <img src="img/static/placeholder.png " width="200" alt="Error">
       <% } %> 
 
-      <h2> <%= post.id %>  </h2>
+      <h2> <%= post.title %>  </h2>
       <p> <%= post.content %>  </p>
       <p> <small><%= post.createdat %> </small> </p>
         

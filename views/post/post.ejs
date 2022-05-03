@@ -16,6 +16,7 @@
       <img src="../img/static/placeholder.png " width="400" alt="Error" />
       <% } %>
 
+      <h2><%= post.id %></h2>
       <h2><%= post.title %></h2>
       <p><%= post.content %></p>
       <p><small><%= post.createdat %> </small></p>
@@ -27,15 +28,12 @@
           <p> <%= comment.content %> </p>
         <% }); %>
       </div>
-      <div>
-        <button class="delete" data-target="<%= post.id %> ">Sil</button>
-        <a href="../post/<%= post.id %> "><strong>-></strong></a>
-      </div>
+      <br>
       <hr />
       <!-- ONE POST HERE -->
 
       <form action="/post/" method="POST">
-        <input type="text" name="id" value="<%= post.id %>" style="display: none;" > 
+        <input type="text" name="id" value="<%= post.id %>"  > 
         <input type="text" name="content" required><br>
         <button type="submit">Yorum yap</button>
       </form>

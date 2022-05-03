@@ -8,11 +8,6 @@ async function login(req, res){
     } else {
         res.redirect('/login');
     }
-    /*if(await user.login(req.body.username, req.body.password)){
-        
-    } else {
-        res.redirect('/login')
-    }*/
 }
 
 function logout(req, res){

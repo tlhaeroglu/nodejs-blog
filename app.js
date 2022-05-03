@@ -41,12 +41,6 @@ app.use(homeRouter);
 app.use("/admin", adminRouter);
 app.use("/post", postRouter);
 
-/*const user = require('./models/User.js');
-let user1 = new user(1, 'user1', 'user1', 'user1', new Date());
-
-const post = require('./models/Post.js');
-let post1 = new post(1, 'post1', 'post1', user1, new Date());
-console.log(post1);*/
 
 app.listen(process.env.PORT || 5000, () => {
   console.log("------ http://localhost:5000/ ------");

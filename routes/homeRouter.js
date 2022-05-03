@@ -5,7 +5,7 @@ const router = express.Router();
 const upload = require('../data/upload.js');
 
 
-router.get('/',  postController.getPosts);
+router.get('/',  postController.renderPosts);
 
 router.post('/', upload.single('img'), postController.createPost);
 
